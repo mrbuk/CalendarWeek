@@ -8,13 +8,19 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIActionSheetDelegate {
     
     @IBOutlet var weekNumberLabel: UILabel!
     @IBOutlet var dateRangeForWeek: UILabel!
+//    @IBOutlet var datePicker: UIDatePicker!
+    
+    @IBOutlet var datePicker: UIDatePicker!
+    @IBOutlet var weekNumberStepper: UIStepper!
+    
+    @IBOutlet var datePickerView: UIView!
     
     var customDateSelected: Bool = false
-    var currentDate: NSDate =
+    var currentDate: NSDate = NSDate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +35,51 @@ class ViewController: UIViewController {
         // show values from Sunday and not from Monday.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("handleWillEnterForeground:"), name: "UIApplicationWillEnterForegroundNotification", object: nil)
     }
+    
+    @IBAction func weekNumberChanged(sender: AnyObject) {
+        NSLog("Changing value ... %d", Int(weekNumberStepper.value))
 
+        customDateSelected = true
+        
+        var (fromDate, _) = calculateDateRangeForWeek(currentDate);
+        
+        // create a calendar instance
+        let cal: NSCalendar = NSCalendar.currentCalendar()
+        
+        // create a new date instance with 'cleared' time based on given date
+        let dateWithClearedTime: NSDate = cal.dateBySettingHour(0, minute: 0, second: 0, ofDate: currentDate, options: NSCalendarOptions.allZeros)
+        
+        if let currentWeekNumber = weekNumberLabel.text?.toInt() {
+            let differenceBetweenWeekNumber = Int(weekNumberStepper.value) - currentWeekNumber
+            
+            var newDate = cal.dateByAddingUnit(NSCalendarUnit.CalendarUnitDay, value: differenceBetweenWeekNumber * 7, toDate: currentDate, options: nil)
+            
+            // get the day of the week to calculate how many days have
+            // to be added or deducted
+            currentDate = newDate
+            
+            reloadData()
+        }
+        
+    }
+    
+    @IBAction func datePickerViewDoneButton(sender: AnyObject) {
+        NSLog("Changing value ... %d", Int(weekNumberStepper.value))
+        datePickerView.hidden = true
+    }
+    
+    @IBAction func dateChangeRequested(sender: AnyObject) {
+        datePicker.enabled = true
+        datePicker.hidden = false
+        datePickerView.hidden = false
+        
+        var recognizer: UITapGestureRecognizer = sender as UITapGestureRecognizer
+        
+        if recognizer.view == dateRangeForWeek {
+            NSLog("Double click issued from: %@", recognizer.view!.description)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -39,21 +89,46 @@ class ViewController: UIViewController {
         NSLog("Entering Foreground")
         NSLog("Current locale: %@", NSLocale.currentLocale().localeIdentifier)
 
-        initData()
+        if !customDateSelected {
+            initData()
+        }
+    }
+    
+    @IBAction func dateValueChanged(sender: AnyObject) {
+        currentDate = datePicker.date
+        reloadData()
+    }
+    
+    @IBAction func switchDateToToday(sender: AnyObject) {
+        // set current date as well as the date picker
+        currentDate = NSDate()
+        datePicker.date = currentDate
+        
+        reloadData()
     }
     
     // calculate and bind data to elements on VIEW
     func initData() {
+        currentDate = NSDate()
+
+        reloadData()
+    }
+    
+    func reloadData() {
         let dateFormatter: NSDateFormatter = NSDateFormatter()
         // dateFormatter.dateFormat = "dd.MM.yyyy"
         dateFormatter.dateFormat = NSDateFormatter.dateFormatFromTemplate("ddMMyyyy", options: 0, locale: NSLocale.currentLocale())
         
-        let date: NSDate = NSDate()
-        let weekNumber = calculateWeekNumber(date)
-        let (dateFrom, dateTo) = calculateDateRangeForWeek(date)
+        let weekNumber = calculateWeekNumber(currentDate)
+        let (dateFrom, dateTo) = calculateDateRangeForWeek(currentDate)
         
         weekNumberLabel.text = "\(weekNumber)"
         dateRangeForWeek.text = "\(dateFormatter.stringFromDate(dateFrom)) - \(dateFormatter.stringFromDate(dateTo))"
+        
+        // update components rendering the date or part of the date
+        // with current data
+        weekNumberStepper.value = Double(weekNumber)
+        datePicker.date = currentDate
     }
     
     // return the week number from a given date

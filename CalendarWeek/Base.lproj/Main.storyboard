@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Current Week View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="CalendarWeek" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="vXZ-lx-hvc" userLabel="Current Week View Controller" customClass="ViewController" customModule="CalendarWeek" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -16,17 +17,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Current week number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ere-cH-2wy">
-                                <rect key="frame" x="217" y="45" width="166" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Week number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S4g-zM-aba">
+                                <rect key="frame" x="185" y="28" width="230" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="117" y="45" width="166" height="21"/>
-                                </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="11" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBA-FK-wcO">
-                                <rect key="frame" x="235" y="57" width="130" height="103"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="01.01.2000 - 99.99.9999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x95-5L-TTn">
+                                <rect key="frame" x="185" y="211" width="230" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="vev-ak-RU2" appends="YES" id="ywe-Kz-cN9"/>
+                                </connections>
+                            </label>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="11" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBA-FK-wcO">
+                                <rect key="frame" x="235" y="57" width="130" height="82"/>
                                 <accessibility key="accessibilityConfiguration" label="Week number">
                                     <accessibilityTraits key="traits" none="YES"/>
                                 </accessibility>
@@ -37,28 +44,96 @@
                                     <rect key="frame" x="135" y="55" width="130" height="103"/>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x95-5L-TTn">
-                                <rect key="frame" x="279" y="147" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="UCy-Mh-BQI">
+                                <rect key="frame" x="253" y="147" width="94" height="29"/>
+                                <connections>
+                                    <action selector="weekNumberChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="egK-Rh-Ulz"/>
+                                </connections>
+                            </stepper>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="bottom" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C2d-mA-Urp">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="GVl-dk-tzg"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem title="Today" id="Tkp-kb-ieK">
+                                        <connections>
+                                            <action selector="switchDateToToday:" destination="vXZ-lx-hvc" id="6Jy-26-aeD"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t4i-yT-O35">
+                                <rect key="frame" x="0.0" y="296" width="351" height="304"/>
+                                <subviews>
+                                    <toolbar opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6LS-tS-E4w">
+                                        <rect key="frame" x="0.0" y="0.0" width="351" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="3hw-Sn-EHn"/>
+                                        </constraints>
+                                        <items>
+                                            <barButtonItem systemItem="done" id="Nvv-PJ-vJl">
+                                                <connections>
+                                                    <action selector="datePickerViewDoneButton:" destination="vXZ-lx-hvc" id="7h7-qh-Osv"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </items>
+                                    </toolbar>
+                                    <datePicker hidden="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="o0c-4C-epq">
+                                        <rect key="frame" x="0.0" y="46" width="351" height="162"/>
+                                        <date key="date" timeIntervalSinceReferenceDate="435333716.65852302">
+                                            <!--2014-10-18 14:01:56 +0000-->
+                                        </date>
+                                        <connections>
+                                            <action selector="dateValueChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="VDi-CE-W1c"/>
+                                        </connections>
+                                    </datePicker>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="o0c-4C-epq" firstAttribute="width" secondItem="t4i-yT-O35" secondAttribute="width" id="FyM-So-JI5"/>
+                                    <constraint firstItem="6LS-tS-E4w" firstAttribute="width" secondItem="t4i-yT-O35" secondAttribute="width" id="N8O-vK-SMb"/>
+                                    <constraint firstItem="o0c-4C-epq" firstAttribute="top" secondItem="t4i-yT-O35" secondAttribute="top" constant="46" id="W2i-7T-qJ8"/>
+                                    <constraint firstItem="6LS-tS-E4w" firstAttribute="top" secondItem="t4i-yT-O35" secondAttribute="top" id="pf3-OI-FtQ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="ere-cH-2wy" secondAttribute="centerX" id="35g-NU-3Qo"/>
-                            <constraint firstAttribute="centerX" secondItem="x95-5L-TTn" secondAttribute="centerX" id="LWl-P2-Btr"/>
-                            <constraint firstItem="ere-cH-2wy" firstAttribute="width" secondItem="pBA-FK-wcO" secondAttribute="width" id="PRn-mm-csP"/>
-                            <constraint firstAttribute="centerX" secondItem="pBA-FK-wcO" secondAttribute="centerX" id="gKa-Ij-AwL"/>
+                            <constraint firstItem="UCy-Mh-BQI" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="127" id="06J-Ml-KUM"/>
+                            <constraint firstItem="S4g-zM-aba" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="8" id="1WV-J6-XgH"/>
+                            <constraint firstItem="x95-5L-TTn" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="191" id="2Lc-LN-467"/>
+                            <constraint firstAttribute="centerX" secondItem="UCy-Mh-BQI" secondAttribute="centerX" id="8ZY-01-uCZ"/>
+                            <constraint firstAttribute="centerX" secondItem="x95-5L-TTn" secondAttribute="centerX" id="IU9-om-TkF"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="t4i-yT-O35" secondAttribute="bottom" id="SFd-Hf-JYB"/>
+                            <constraint firstAttribute="centerX" secondItem="S4g-zM-aba" secondAttribute="centerX" id="SJN-z7-L8D"/>
+                            <constraint firstAttribute="width" secondItem="t4i-yT-O35" secondAttribute="width" id="azd-gE-dPI"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="C2d-mA-Urp" secondAttribute="bottom" id="jAv-t9-6dB"/>
+                            <constraint firstItem="pBA-FK-wcO" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="37" id="jkb-sp-qlT"/>
+                            <constraint firstAttribute="centerX" secondItem="pBA-FK-wcO" secondAttribute="centerX" id="o9u-Av-qHL"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Week number" id="g34-8i-6lj" userLabel="Current week number">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="RHc-y5-1xB"/>
+                    </navigationItem>
                     <connections>
+                        <outlet property="datePicker" destination="o0c-4C-epq" id="bKD-gV-PMp"/>
+                        <outlet property="datePickerView" destination="t4i-yT-O35" id="vgA-dt-ubl"/>
                         <outlet property="dateRangeForWeek" destination="x95-5L-TTn" id="LfJ-RD-Ssc"/>
                         <outlet property="weekNumberLabel" destination="pBA-FK-wcO" id="8oV-tm-RTK"/>
+                        <outlet property="weekNumberStepper" destination="UCy-Mh-BQI" id="B20-L7-KVj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="vev-ak-RU2">
+                    <connections>
+                        <action selector="dateChangeRequested:" destination="vXZ-lx-hvc" id="H1s-hr-Mu8"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="435" y="1156"/>
         </scene>
     </scenes>
 </document>

@@ -407,6 +407,7 @@
 				69CE9B1419E59CF4008505A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		69CE9B1519E59CF4008505A2 /* Build configuration list for PBXNativeTarget "CalendarWeekTests" */ = {
 			isa = XCConfigurationList;
@@ -415,6 +416,7 @@
 				69CE9B1719E59CF4008505A2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
